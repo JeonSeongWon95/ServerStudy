@@ -104,39 +104,37 @@ int main()
 						{
 							if (ReadSockets.fd_array[j] != ListenSocket)
 							{
-								for (int k = 0; k < (int)strlen(Buffer); ++k)
+
+								switch (Buffer[0])
 								{
-
-									switch (Buffer[k])
-									{
-									case 'w':
-										PlayerY--;
-										break;
-									case 's':
-										PlayerY++;
-										break;
-									case 'a':
-										PlayerX--;
-										break;
-									case 'd':
-										PlayerX++;
-										break;
-									}
-
-									system("cls");
-									COORD Cur;
-									Cur.X = PlayerX;
-									Cur.Y = PlayerY;
-									SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
-									printf("*");
-
-									Data Packet;
-
-									Packet.X = htonl(PlayerX);
-									Packet.Y = htonl(PlayerY);
-
-									int SendBytes = send(ReadSockets.fd_array[j], (char*)&Packet, sizeof(Packet), 0);
+								case 'w':
+									PlayerY--;
+									break;
+								case 's':
+									PlayerY++;
+									break;
+								case 'a':
+									PlayerX--;
+									break;
+								case 'd':
+									PlayerX++;
+									break;
 								}
+
+								system("cls");
+								COORD Cur;
+								Cur.X = PlayerX;
+								Cur.Y = PlayerY;
+								SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
+								printf("*");
+
+								Data Packet;
+
+								Packet.X = htonl(PlayerX);
+								Packet.Y = htonl(PlayerY);
+
+								int SendBytes = send(ReadSockets.fd_array[j], (char*)&Packet, sizeof(Packet), 0);
+
 							}
 						}
 
